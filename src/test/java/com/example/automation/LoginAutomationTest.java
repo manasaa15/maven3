@@ -1,41 +1,75 @@
+
 package com.example.automation;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LoginAutomationTest {
-    @Test
-    public void testLogin() {
-        // Set up the WebDriver
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Admin\\Downloads\\geck\\chromedriver-win64\\chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
+class LoginAutomationTest {
 
+    private static WebDriver driver;
+
+    @BeforeAll
+    static void setup() {
+        // Seting up the  WebDriver for Firefox
+         System.setProperty("webdriver.chrome.driver", "C:\\Users\\Admin\\Downloads\\geck\\chromedriver-win64\\chromedriver.exe");
+         WebDriver driver = new ChromeDriver();
+    }
+
+    @Test
+    void testLogin() {
         try {
-            // Navigate to the login page
-            driver.get("https://example.com/login");
+            // Navigating to the Sauce Demo login page
+            driver.get("https://www.saucedemo.com");
 
             // Locate the username and password fields
-            WebElement usernameField = driver.findElement(By.id("username"));
+            WebElement usernameField = driver.findElement(By.id("user-name"));
             WebElement passwordField = driver.findElement(By.id("password"));
-            WebElement loginButton = driver.findElement(By.id("loginButton"));
+            WebElement loginButton = driver.findElement(By.id("login-button"));
 
-            // Perform login
-            usernameField.sendKeys("testUser");
-            passwordField.sendKeys("testPassword");
+            // Performing login using provided test credentials
+            usernameField.sendKeys("standard_user");
+            passwordField.sendKeys("secret_sauce");
             loginButton.click();
 
-            // Validate successful login
-            String expectedTitle = "Dashboard";
-            String actualTitle = driver.getTitle();
-            assertEquals(expectedTitle, actualTitle);
+            // Validating successful login by checking the page title or a unique element
+            WebElement inventoryPageTitle = driver.findElement(By.className("title"));
+            String expectedTitle = "PRODUCTS";
+            String actualTitle = inventoryPageTitle.getText();
 
-        } finally {
-            // Close the browser
+            assertEquals(expectedTitle.toLowerCase(), actualTitle.toLowerCase(), "Login test failed: Title mismatch.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Login test failed due to an exception.");
+        }
+    }
+
+    @Test
+    void testWelcomeMessage() {
+        // Created an instance of App
+        App app = new App();
+
+    
+        String result = app.welcomeMessage("manasa");
+
+        // Validating the result
+        assertEquals("Hello", result, "The welcome message should be correct.");
+    }
+
+    @AfterAll
+    static void tearDown() {
+        // Closing the browser
+        if (driver != null) {
             driver.quit();
         }
     }
 }
+
+
+       
+
