@@ -18,7 +18,7 @@ class LoginAutomationTest {
         try {
             // Set the path for GeckoDriver (Firefox driver)
             System.setProperty("webdriver.gecko.driver", "C:\\Users\\Admin\\Downloads\\geck\\geckodriver.exe");
-            driver = new FirefoxDriver();
+            WebDriver driver = new FirefoxDriver();
         } catch (Exception e) {
             e.printStackTrace();
             throw new AssertionError("Failed to initialize WebDriver.");
