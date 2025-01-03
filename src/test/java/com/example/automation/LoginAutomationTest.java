@@ -16,7 +16,7 @@ class LoginAutomationTest {
     @BeforeAll
     static void setup() {
         // Seting up the  WebDriver for Firefox
-        System.setProperty("webdriver.gecko.driver", "C:\\Users\\utka2\\Downloads\\geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", "C:\\Users\\Admin\\Downloads\\geck\\geckodriver.exe");
         driver = new FirefoxDriver();
     }
 
@@ -54,7 +54,7 @@ class LoginAutomationTest {
         App app = new App();
 
     
-        String result = app.welcomeMessage("Utkarsh");
+        String result = app.welcomeMessage("Manasa");
 
         // Validating the result
         assertEquals("Hello, Utkarsh!", result, "The welcome message should be correct.");
