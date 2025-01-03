@@ -15,32 +15,38 @@ class LoginAutomationTest {
 
     @BeforeAll
     static void setup() {
-        // Seting up the  WebDriver for Firefox
-        System.setProperty("webdriver.gecko.driver", "C:\\Users\\Admin\\Downloads\\geck\\geckodriver.exe");
-        driver = new FirefoxDriver();
+        try {
+            // Set the path for GeckoDriver (Firefox driver)
+            System.setProperty("webdriver.gecko.driver", "C:\\Users\\Admin\\Downloads\\geck\\geckodriver.exe");
+            driver = new FirefoxDriver();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Failed to initialize WebDriver.");
+        }
     }
 
     @Test
     void testLogin() {
         try {
-            // Navigating to the Sauce Demo login page
+            // Navigate to Sauce Demo login page
             driver.get("https://www.saucedemo.com");
 
-            // Locate the username and password fields
+            // Locate username, password fields, and login button
             WebElement usernameField = driver.findElement(By.id("user-name"));
             WebElement passwordField = driver.findElement(By.id("password"));
             WebElement loginButton = driver.findElement(By.id("login-button"));
 
-            // Performing login using provided test credentials
+            // Perform login action
             usernameField.sendKeys("standard_user");
             passwordField.sendKeys("secret_sauce");
             loginButton.click();
 
-            // Validating successful login by checking the page title or a unique element
+            // Validate successful login
             WebElement inventoryPageTitle = driver.findElement(By.className("title"));
             String expectedTitle = "PRODUCTS";
             String actualTitle = inventoryPageTitle.getText();
 
+            // Assert title is correct (ignoring case)
             assertEquals(expectedTitle.toLowerCase(), actualTitle.toLowerCase(), "Login test failed: Title mismatch.");
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,18 +59,22 @@ class LoginAutomationTest {
         // Created an instance of App
         App app = new App();
 
-    
+        // Providing the name for the message
         String result = app.welcomeMessage("Manasa");
 
-        // Validating the result
-        assertEquals("Hello, Utkarsh!", result, "The welcome message should be correct.");
+        // Correct expected message based on input
+        assertEquals("Hello, Manasa!", result, "The welcome message should be correct.");
     }
 
     @AfterAll
     static void tearDown() {
-        // Closing the browser
-        if (driver != null) {
-            driver.quit();
+        try {
+            // Close the browser after tests
+            if (driver != null) {
+                driver.quit();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
