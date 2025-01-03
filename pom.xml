@@ -12,6 +12,9 @@
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <sonar.host.url>http://localhost:9000</sonar.host.url> <!-- Replace with your SonarQube server URL -->
+    <sonar.login>sqp_6310cf573219d50dc8578030301ffa306c6b965b</sonar.login>
   </properties>
 
   <dependencies>
